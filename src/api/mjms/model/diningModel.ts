@@ -15,10 +15,16 @@ export interface Dining {
   remark: string;
 }
 
+export interface DiningQuery {
+  sdate?: string;
+  edate?: string;
+}
+
 export const diningTableColumns: BasicColumn[] = [
   {
     title: '日期',
     dataIndex: 'dnDate',
+    fixed: true,
   },
   {
     title: '早餐-真实',
