@@ -7,7 +7,7 @@ const dashboard: AppRouteModule = {
   component: LAYOUT,
   redirect: '/detail/dining',
   meta: {
-    orderNo: 1,
+    orderNo: 2,
     icon: 'ion:grid-outline',
     title: '数据详情',
   },

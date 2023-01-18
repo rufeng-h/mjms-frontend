@@ -9,3 +9,11 @@ enum Api {
 export function pageDining(params: DiningQuery & BasicPageParams) {
   return defHttp.get<Dining[]>({ url: Api.Base, params });
 }
+
+export function getDining(date: string) {
+  return defHttp.get<Dining>({ url: `${Api.Base}/${date}` });
+}
+
+export function listDining(data: string[]) {
+  return defHttp.post<Dining[]>({ url: `${Api.Base}/list`, data });
+}

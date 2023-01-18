@@ -15,6 +15,23 @@ export interface Dining {
   remark: string;
 }
 
+export function getEmptyDn() {
+  return {
+    dnId: 0,
+    dnDate: '',
+    realBreakfast: 0,
+    realLunch: 0,
+    realDinner: 0,
+    predBreakfast: 0,
+    predLunch: 0,
+    predDinner: 0,
+    amsBreakfast: 0,
+    amsLunch: 0,
+    amsDinner: 0,
+    remark: '',
+  };
+}
+
 export interface DiningQuery {
   sdate?: string;
   edate?: string;
