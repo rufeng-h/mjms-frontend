@@ -222,7 +222,8 @@
     },
     setup() {
       onBeforeMount(async () => {
-        fetchDn(dayjs());
+        /* fetchDn(dayjs()); */
+        fetchDn(dayjs('2023-01-19', DATE_FMT));
       });
 
       return {

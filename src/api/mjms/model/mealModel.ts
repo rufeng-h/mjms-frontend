@@ -28,6 +28,12 @@ export interface MealRecords {
   opUser: string;
 }
 
+export interface MealDistribution {
+  type: string;
+  consume: number;
+  count: number;
+}
+
 export interface MealQuery {
   maxConsume?: number;
   minConsume?: number;
