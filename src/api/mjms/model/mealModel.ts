@@ -1,4 +1,51 @@
 import { BasicColumn } from '/@/components/Table';
+export interface AgeMeal {
+  ageInterval: string;
+  count: number;
+}
+
+export interface DeptMeal {
+  dept: string;
+  count: number;
+  total: number;
+}
+
+export interface SiteStatistic {
+  /**
+   * 今日预计就餐
+   */
+  dayPredMeal: number;
+  yesterdayMeal: number;
+
+  /**
+   * 今日就餐人次
+   */
+  dayMeal: number;
+  /**
+   * 月总人次
+   */
+  monthMeal: number;
+
+  /**
+   * 日总金额
+   */
+  dayMoney: number;
+
+  /**
+   * 月总金额
+   */
+  monthMoney: number;
+
+  /**
+   * 今日门禁
+   */
+  dayAms: number;
+
+  /**
+   * 月总门禁
+   */
+  monthAms: number;
+}
 
 export interface MealRecords {
   id: number;

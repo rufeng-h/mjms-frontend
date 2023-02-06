@@ -1,6 +1,5 @@
 <template>
-  <!-- <div> <Statistic /></div> -->
-  <div> <Distribution /></div>
+  <div> <Statistic /><ManFlow /></div>
 </template>
 
 <script lang="ts">
@@ -8,12 +7,14 @@
   import Statistic from './components/Statistic.vue';
   import PredLine from './components/PredLine.vue';
   import Distribution from './components/Distribution.vue';
+  import ManFlow from './components/ManFlow.vue';
 
   export default defineComponent({
     components: {
       Statistic,
       PredLine,
       Distribution,
+      ManFlow,
     },
     setup() {},
   });

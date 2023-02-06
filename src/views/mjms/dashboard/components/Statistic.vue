@@ -1,5 +1,5 @@
 <template>
-  <a-card class="w-full !md:w-1/4" title="就餐和门禁" hoverable>
+  <a-card class="w-full md:w-1/4" style="min-width: 430px" title="就餐和门禁" hoverable>
     <!-- 标题 -->
     <!-- <template #title>
       <BasicTitle helpMessage="帮助信息">统计信息</BasicTitle>
@@ -24,50 +24,74 @@
     </template>
 
     <BasicTable @register="regTable">
+      <template #headerCell="{ column }">
+        <span class="text-base">{{ column.customTitle }}</span>
+        <span v-if="column.dataIndex == 'pred'" class="text-xs ml-1 italic text-orange-600"
+          >误差</span
+        >
+        <span v-if="column.dataIndex == 'real'" class="text-xs ml-1 italic text-blue-600"
+          >同比</span
+        >
+        <span v-if="column.dataIndex == 'ams'" class="text-xs ml-1 italic text-purple-600"
+          >偏差</span
+        >
+      </template>
       <template #time="{ record }">
         <Icon :icon="record.time.icon" />
-        <span class="ml-2">{{ record.time.value }}</span>
+        <span class="ml-1">{{ record.time.value }}</span>
       </template>
       <template #pred="{ record }">
-        <CountTo :startVal="0" :endVal="record.pred.value" class="text-2xl" />
-        <span v-if="record.pred.error !== undefined" class="text-orange-600 ml-1">
-          {{ (100 * record.pred.error).toFixed(2) + '%' }}
-        </span>
+        <Tooltip>
+          <template #title>预测误差{{ (100 * record.pred.error).toFixed(1) + '%' }}</template>
+          <CountTo :startVal="0" :endVal="record.pred.value" class="text-xl" />
+          <span v-if="record.pred.error !== undefined" class="text-orange-600 ml-1">
+            {{ (100 * record.pred.error).toFixed(1) + '%' }}
+          </span>
+        </Tooltip>
       </template>
       <template #real="{ record }">
-        <CountTo :startVal="0" :endVal="record.real.value" class="text-2xl" />
-        <span
-          v-if="record.real.error !== undefined"
-          class="ml-1"
-          :class="{
-            'text-rose-600': record.real.error < 0,
-            'text-green-600': record.real.error >= 0,
-          }"
-        >
-          <Icon
-            :color="record.real.error > 0 ? 'green' : 'red'"
-            size="13"
-            :icon="
-              record.real.error > 0
-                ? 'material-symbols:arrow-upward'
-                : 'material-symbols:arrow-downward'
-            "
-          />
-          {{ Math.abs(100 * record.real.error).toFixed(2) + '%' }}
-        </span>
+        <Tooltip>
+          <template #title
+            >较昨日{{ record.real.error > 0 ? '上升' : '下降'
+            }}{{ Math.abs(100 * record.real.error).toFixed(1) + '%' }}</template
+          >
+          <CountTo :startVal="0" :endVal="record.real.value" class="text-xl" />
+          <span
+            v-if="record.real.error !== undefined"
+            class="ml-1"
+            :class="{
+              'text-rose-600': record.real.error < 0,
+              'text-green-600': record.real.error >= 0,
+            }"
+          >
+            <Icon
+              :color="record.real.error > 0 ? 'green' : 'red'"
+              size="13"
+              :icon="
+                record.real.error > 0
+                  ? 'material-symbols:arrow-upward'
+                  : 'material-symbols:arrow-downward'
+              "
+            />
+            {{ Math.abs(100 * record.real.error).toFixed(1) + '%' }}
+          </span>
+        </Tooltip>
       </template>
       <template #ams="{ record }">
-        <CountTo :startVal="0" :endVal="record.ams.value" class="text-2xl" />
-        <span v-if="record.ams.error !== undefined" class="ml-1 text-purple-600">
-          {{ '/ ' + record.ams.error }}
-        </span>
+        <Tooltip>
+          <template #title>与实际差{{ record.ams.error }}人</template>
+          <CountTo :startVal="0" :endVal="record.ams.value" class="text-xl" />
+          <span v-if="record.ams.error !== undefined" class="ml-1 text-purple-600">
+            {{ '/ ' + record.ams.error }}
+          </span>
+        </Tooltip>
       </template>
     </BasicTable>
   </a-card>
 </template>
 
 <script lang="ts">
-  import { Card, DatePicker, Tag } from 'ant-design-vue';
+  import { Card, DatePicker, Tag, Tooltip } from 'ant-design-vue';
   import dayjs, { Dayjs } from 'dayjs';
   import { computed, defineComponent, onBeforeMount, reactive, toRefs } from 'vue';
   import { listDining } from '/@/api/mjms/dining';
@@ -92,18 +116,18 @@
     {
       dataIndex: 'pred',
       title: '预计',
-      width: 120,
+      width: 110,
       slots: { customRender: 'pred' },
     },
     {
       title: '实际',
-      width: 140,
+      width: 130,
       dataIndex: 'real',
       slots: { customRender: 'real' },
     },
     {
       dataIndex: 'ams',
-      width: 120,
+      width: 100,
       title: '门禁',
       slots: { customRender: 'ams' },
     },
@@ -215,6 +239,7 @@
     components: {
       [Tag.name]: Tag,
       Icon,
+      Tooltip,
       CountTo,
       [DatePicker.name]: DatePicker,
       [Card.name]: Card,

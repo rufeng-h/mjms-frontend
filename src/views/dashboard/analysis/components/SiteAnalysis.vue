@@ -5,30 +5,32 @@
     :active-tab-key="activeKey"
     @tab-change="onTabChange"
   >
-    <p v-if="activeKey === 'tab1'">
-      <VisitAnalysis />
-    </p>
-    <p v-if="activeKey === 'tab2'">
-      <VisitAnalysisBar />
+    <div v-if="activeKey === 'meal'" class="flex flex-row justify-start items-center">
+      <Statistic />
+      <PredLine />
+    </div>
+    <p v-if="activeKey === 'flow'">
+      <ManFlow />
     </p>
   </Card>
 </template>
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { Card } from 'ant-design-vue';
-  import VisitAnalysis from './VisitAnalysis.vue';
-  import VisitAnalysisBar from './VisitAnalysisBar.vue';
+  import PredLine from '/@/views/mjms/dashboard/components/PredLine.vue';
+  import ManFlow from '/@/views/mjms/dashboard/components/ManFlow.vue';
+  import Statistic from '/@/views/mjms/dashboard/components/Statistic.vue';
 
-  const activeKey = ref('tab1');
+  const activeKey = ref('meal');
 
   const tabListTitle = [
     {
-      key: 'tab1',
-      tab: '流量趋势',
+      key: 'meal',
+      tab: '就餐详情',
     },
     {
-      key: 'tab2',
-      tab: '访问量',
+      key: 'flow',
+      tab: '每10分钟流量',
     },
   ];
 

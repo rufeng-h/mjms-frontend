@@ -4,6 +4,9 @@ dist
 .npmrc
 .cache
 
+
+/dist
+
 tests/server/static
 tests/server/static/upload
 
